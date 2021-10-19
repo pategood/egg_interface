@@ -39,14 +39,14 @@ module.exports = appInfo => {
   // };
 
 
-  config.sequelize = {
-    dialect: 'mysql',
-    host: '127.0.0.1',
-    port: 3307,
-    database: 'egg-sequelize-doc-default',
-    username: 'root',
-    password: '123456',
-  };
+  // config.sequelize = {
+  //   dialect: 'mysql',
+  //   host: '127.0.0.1',
+  //   port: 3307,
+  //   database: 'egg-sequelize-doc-default',
+  //   username: 'root',
+  //   password: '123456',
+  // };
 
   return {
     ...config,
