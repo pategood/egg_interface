@@ -22,31 +22,25 @@ module.exports = appInfo => {
   const userConfig = {
     // myAppName: 'egg',
   };
-  // // Mysql
-  // config.sequelize = {
-  //   dialect: 'mysql',
-  //   host: 'localhost',
-  //   port: 3306,
-  //   database: 'myprojectdb',
-  //   username: 'root',
-  //   password: '123456',
-  //   define: {
-  //     // freezeTableName默认值为false，会自动在表名后加s
-  //     freezeTableName: true,
-  //     // timestamps默认值为true，会自动添加create_time和update_time
-  //     timestamps: false,
-  //   },
-  // };
 
-
-  // config.sequelize = {
-  //   dialect: 'mysql',
-  //   host: '127.0.0.1',
-  //   port: 3307,
-  //   database: 'egg-sequelize-doc-default',
-  //   username: 'root',
-  //   password: '123456',
-  // };
+  config.mysql = {
+    client: {
+      // host
+      host: 'localhost',
+      // 端口号
+      port: '3306',
+      // 用户名
+      user: 'root',
+      // 密码
+      password: '123456',
+      // 数据库名
+      database: 'egg_db',
+    },
+    // 是否加载到 app 上，默认开启
+    app: true,
+    // 是否加载到 agent 上，默认关闭
+    agent: false,
+  };
 
   return {
     ...config,
