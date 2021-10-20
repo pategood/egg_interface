@@ -42,6 +42,21 @@ module.exports = appInfo => {
     agent: false,
   };
 
+
+  // csrf 安全配置
+  config.security = {
+    csrf: {
+      enable: false,
+      ignoreJSON: true,
+    },
+    // 允许访问接口的白名单
+    domainWhiteList: [ '*' ], // ['http://localhost:8080']
+  };
+  config.cors = {
+    origin: '*',
+    allowMethods: 'GET, HEAD, PUT, POST, DELETE, PATCH',
+  };
+
   return {
     ...config,
     ...userConfig,
