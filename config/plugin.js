@@ -6,10 +6,10 @@ module.exports = {
     enable: true,
     package: 'egg-mysql',
   },
-  cors: {
-    enable: true,
-    package: 'egg-cors',
-  },
+  // cors: {
+  //   enable: true,
+  //   package: 'egg-cors',
+  // },
   // redis: {
   //   enable: true,
   //   package: 'egg-redis',

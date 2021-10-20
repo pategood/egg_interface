@@ -12,8 +12,8 @@ class UsersController extends Controller {
   // 获取个人用户信息
   async login() {
     const { ctx } = this;
+    console.log(ctx.query, 'query');
     const user = await ctx.service.user.getMyUser();
-    // ctx.body = user;
     ctx.body = {
       code: 0,
       post: ctx.request.body,
@@ -22,12 +22,15 @@ class UsersController extends Controller {
       msg: '',
     };
   }
-  // // 注册用户
-  // async create() {
-  //   const { ctx } = this;
-  //   const user = await ctx.service.user.create();
-  //   ctx.body = user;
-  // }
+  // 注册用户
+  async register() {
+    const { ctx } = this;
+    console.log(ctx.request.body, 3);
+    const username = ctx.request.body.username;
+    const password = ctx.request.body.password;
+    const user = await ctx.service.user.register(username, password);
+    ctx.body = user;
+  }
   // // 编辑用户
   // async update() {
   //   const { ctx } = this;
