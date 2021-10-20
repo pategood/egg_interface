@@ -14,7 +14,7 @@ class UserService extends Service {
     return { user };
   }
   async getMyUser() {
-    const user = await this.app.mysql.query('select * from `users` where `id` = 2 limit 0, 1;', '')
+    const user = await this.app.mysql.query('select * from `users` where `id` = 2 limit 0, 1;', '');
     return { user };
   }
   // async create() {
