@@ -14,6 +14,11 @@ class ArticleController extends Controller {
       msg: '',
     };
   }
+
+  // 点赞文章
+
+  // 收藏文章
+
 }
 
 module.exports = ArticleController;

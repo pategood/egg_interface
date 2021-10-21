@@ -41,6 +41,10 @@ module.exports = appInfo => {
     // 是否加载到 agent 上，默认关闭
     agent: false,
   };
+  config.validate = {
+    convert: true,
+    widelyUndefined: true,
+  };
 
 
   // csrf 安全配置
