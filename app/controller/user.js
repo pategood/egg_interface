@@ -25,7 +25,12 @@ class UsersController extends Controller {
   // 注册用户
   async register() {
     const { ctx } = this;
-    console.log(ctx.request.body, 3);
+    const createRule = {
+      username: { type: 'string' },
+      password: { type: 'string' },
+    };
+    // 校验参数
+    ctx.validate(createRule);
     const username = ctx.request.body.username;
     const password = ctx.request.body.password;
     const user = await ctx.service.user.register(username, password);
