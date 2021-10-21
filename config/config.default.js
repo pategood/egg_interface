@@ -45,6 +45,15 @@ module.exports = appInfo => {
     convert: true,
     widelyUndefined: true,
   };
+  // config.redis = {
+  //   client: {
+  //     port: 3306,
+  //     host: 'localhost',
+  //     user: 'root',
+  //     password: '123456',
+  //     database: 'egg_db',
+  //   },
+  // };
 
 
   // csrf 安全配置

@@ -10,13 +10,13 @@ module.exports = {
     enable: true,
     package: 'egg-validate',
   },
+  redis: {
+    enable: true,
+    package: 'egg-redis',
+  },
   // cors: {
   //   enable: true,
   //   package: 'egg-cors',
-  // },
-  // redis: {
-  //   enable: true,
-  //   package: 'egg-redis',
   // },
   // sequelize: {
   //   enable: true,
