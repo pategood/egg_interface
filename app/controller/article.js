@@ -6,9 +6,13 @@ class ArticleController extends Controller {
   // 获取文章列表
   async getArticleList() {
     const { ctx } = this;
-    const { currentPage, count } = ctx.request.body;
-    const articleList = await ctx.service.article.getArticleList(currentPage, count);
-    ctx.body = articleList;
+    // const { currentPage, count } = ctx.request.body;
+    const articleList = await ctx.service.article.article.getArticleList();
+    ctx.body = {
+      code: 0,
+      data: articleList,
+      msg: '',
+    };
   }
 }
 
