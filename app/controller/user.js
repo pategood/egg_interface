@@ -6,8 +6,12 @@ class UsersController extends Controller {
   // 获取所有用户信息
   async getAllUser() {
     const { ctx } = this;
-    const user = await ctx.service.user.getAllUser();
-    ctx.body = user;
+    const allUser = await ctx.service.user.getAllUser();
+    ctx.body = {
+      code: 0,
+      data: allUser,
+      msg: '请求成功!',
+    };
   }
   // 获取个人用户信息
   async login() {
@@ -37,6 +41,19 @@ class UsersController extends Controller {
     const user = await ctx.service.user.register(username, password);
     ctx.body = user;
   }
+
+  // 退出账户
+  async logout() {
+    const { ctx } = this;
+    const id = ctx.body.id;
+    const result = await ctx.service.user.logout(id);
+    ctx.body = {
+      data: result,
+      code: 0,
+      msg: '',
+    };
+  }
+
 
   // // 编辑用户
   // async update() {

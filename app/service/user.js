@@ -11,12 +11,11 @@ class UserService extends Service {
   }
   async getAllUser() {
     const user = await this.app.mysql.query('select * from users', '');
-    return { user };
+    return user;
   }
   async getMyUser() {
     const user = await this.app.mysql.get('users', { id: 2 });
-    // const user = await this.app.mysql.query('select * from `users` where `id` = 2 limit 0, 1;', '');
-    return { user };
+    return user;
   }
   // 注册
   async register(username, password) {
@@ -30,11 +29,17 @@ class UserService extends Service {
     return { user };
   }
 
+  // 注销账户
+  async logout(id) {
+    const result = await this.app.mysql.query(`update users set isLogin = 1 where id =  ${id} ;`, '');
+    // const result = await this.app.mysql.update('users', { isLogin: 0 });
+    return result;
+  }
+
   // async createUser() {
   //   const user = await this.app.mysql.insert('test_db', { test_db: 'testData' });
   //   return { user };
   // }
-
 }
 
 module.exports = UserService;
