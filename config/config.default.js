@@ -15,7 +15,7 @@ module.exports = appInfo => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1634199877026_3436';
 
-  config.middleware = [ 'errorHandler' ];
+  // config.middleware = [ 'errorHandler' ];
   config.errorHandler = {
     // 通用配置（以下是重点）
     // enable:true, // 控制中间件是否开启。

@@ -24,6 +24,14 @@ class SearchService extends Service {
     );
     return searchResult;
   }
+  // 获取用户搜索历史
+  async getHistory(currentPage = 1, pageSize = 2) {
+    const searchHistory = await this.app.mysql.query(
+      `select * from search_list where id > '${(currentPage - 1) * pageSize}' limit ${pageSize};`,
+      ''
+    );
+    return searchHistory;
+  }
 
   // 增加搜索记录
   async addHistory(searchText) {
@@ -36,14 +44,6 @@ class SearchService extends Service {
     return res;
   }
 
-  // 获取用户搜索历史
-  async getHistory(currentPage = 1, pageSize = 2) {
-    const searchHistory = await this.app.mysql.query(
-      `select * from search_list where id > '${(currentPage - 1) * pageSize}' limit ${pageSize};`,
-      ''
-    );
-    return searchHistory;
-  }
 
 }
 
