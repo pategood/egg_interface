@@ -8,8 +8,16 @@ module.exports = app => {
   router.get('/', controller.home.index);
   router.get('/getAllUser', controller.user.getAllUser);
   router.get('/logout', controller.user.logout);
-  // 列表分页查询
-  router.get('/getArticleList', controller.article.getArticleList);
+
+  // 获取文章列表
+  router.get('/article/articleList', controller.article.getArticleList);
+
+  // 搜索模块
+  router.get('/search/result', controller.search.getResult);
+  router.get('/search/addHistory', controller.search.addHistory);
+  router.get('/search/removeHistory', controller.search.removeHistory);
+  router.get('/search/suggestions', controller.search.getSuggestions);
+  router.get('/search/histories', controller.search.getHistory);
 
   router.post('/login', controller.user.login);
 

@@ -31,7 +31,7 @@ class UserService extends Service {
 
   // 注销账户
   async logout(id) {
-    const result = await this.app.mysql.query(`update users set isLogin = 1 where id =  ${id} ;`, '');
+    const result = await this.app.mysql.query(`update users set isLogin = 1 where accountID =  ${id} ;`, '');
     // const result = await this.app.mysql.update('users', { isLogin: 0 });
     return result;
   }

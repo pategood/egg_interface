@@ -45,7 +45,7 @@ class UsersController extends Controller {
   // 退出账户
   async logout() {
     const { ctx } = this;
-    const id = ctx.body.id;
+    const { id = 2 } = ctx.request.body;
     const result = await ctx.service.user.logout(id);
     ctx.body = {
       data: result,
