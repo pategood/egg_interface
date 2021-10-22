@@ -47,7 +47,7 @@ module.exports = appInfo => {
   };
   // config.redis = {
   //   client: {
-  //     port: 3306,
+  //     port: 6379,
   //     host: 'localhost',
   //     user: 'root',
   //     password: '123456',
