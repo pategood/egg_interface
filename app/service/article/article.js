@@ -20,6 +20,13 @@ class ArticleService extends Service {
   }
 
   // 获取文章详情
+  async getArticle(articleId) {
+    const articleDetail = await this.app.mysql.select('article', { where: { article_id: articleId } });
+    return articleDetail;
+  }
+  
+  // 获取自己文章
+  // select users.accountID,user_article.article_id  from users left join user_article on users.accountID = user_article.accountID where users.accountID = 2 ;
 
   /**
    * 收藏文章

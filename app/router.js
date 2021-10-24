@@ -8,9 +8,14 @@ module.exports = app => {
   router.get('/', controller.home.index);
   router.get('/getAllUser', controller.user.getAllUser);
   router.get('/logout', controller.user.logout);
+  router.post('/login', controller.user.login);
+  router.post('/register', controller.user.register);
 
   // 获取文章列表
-  router.get('/article/articleList', controller.article.getArticleList);
+  router.get('/articles/articleList', controller.article.getArticleList);
+  router.get('/articles/:articleId', controller.article.getArticle);
+  router.get('/article/collections', controller.article.collect);
+  router.get('/article/collections/:articleId', controller.article.undoCollect);
 
   // 搜索模块
   router.get('/search/result', controller.search.getResult);
@@ -19,14 +24,5 @@ module.exports = app => {
   router.get('/search/suggestions', controller.search.getSuggestions);
   router.get('/search/histories', controller.search.getHistory);
 
-  router.post('/login', controller.user.login);
 
-  router.get('/register', controller.user.register);
-
-
-  // router.get('/createTest', controller.user.create);
-
-  // RESTful风格
-  // app.router.resources('routerName', 'pathMatch', controller)
-  // router.resources('users', '/api/v1/users', controller.v1.users);
 };

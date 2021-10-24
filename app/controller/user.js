@@ -16,12 +16,15 @@ class UsersController extends Controller {
   // 获取个人用户信息
   async login() {
     const { ctx } = this;
-    console.log(ctx.query, 'query');
-    const user = await ctx.service.user.getMyUser();
+    const { username, password } = ctx.request.body;
+    const createRule = {
+      username: { type: 'string' },
+      password: { type: 'string' },
+    };
+    // 校验参数;
+    const user = await ctx.service.user.getMyUser(username, password);
     ctx.body = {
-      code: 0,
-      post: ctx.request.body,
-      id: ctx.request.body.id,
+      code: ctx.validate(createRule),
       data: user,
       msg: '',
     };
@@ -30,16 +33,18 @@ class UsersController extends Controller {
   // 注册用户
   async register() {
     const { ctx } = this;
-    const username = ctx.request.body.username;
-    const password = ctx.request.body.password;
-    // const createRule = {
-    //   username: { type: 'string' },
-    //   password: { type: 'string' },
-    // };
-    // // 校验参数;
-    // ctx.validate(createRule);
+    const { username = 'test9', password = '111111' } = ctx.request.body;
+    const createRule = {
+      username: { type: 'string' },
+      password: { type: 'string' },
+    };
+    // 校验参数;
     const user = await ctx.service.user.register(username, password);
-    ctx.body = user;
+    ctx.body = {
+      code: ctx.validate(createRule),
+      data: user,
+      msg: '',
+    };
   }
 
   // 退出账户

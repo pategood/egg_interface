@@ -13,8 +13,8 @@ class UserService extends Service {
     const user = await this.app.mysql.query('select * from users', '');
     return user;
   }
-  async getMyUser() {
-    const user = await this.app.mysql.get('users', { id: 2 });
+  async getMyUser(username, password) {
+    const user = await this.app.mysql.select('users', { where: { username, password } });
     return user;
   }
   // 注册

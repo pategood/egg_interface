@@ -14,10 +14,10 @@ module.exports = {
     enable: true,
     package: 'egg-redis',
   },
-  // cors: {
-  //   enable: true,
-  //   package: 'egg-cors',
-  // },
+  cors: {
+    enable: true,
+    package: 'egg-cors',
+  },
   // sequelize: {
   //   enable: true,
   //   package: 'egg-sequelize',

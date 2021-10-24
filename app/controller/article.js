@@ -15,10 +15,43 @@ class ArticleController extends Controller {
     };
   }
 
+  // 获取文章详情
+  async getArticle() {
+    const { ctx } = this;
+    const articleId = ctx.params.articleId;
+    const articleDetails = await ctx.service.article.article.getArticle(articleId);
+    ctx.body = {
+      code: 0,
+      data: articleDetails,
+      msg: '',
+    };
+  }
+
   // 点赞文章
 
   // 收藏文章
+  async collect() {
+    const { ctx } = this;
+    const res = await ctx.service.article.article.collect(articleId);
+    ctx.body = {
+      code: 0,
+      data: res,
+      msg: '',
+    };
+  }
 
+  // 取消收藏
+  async undoCollect() {
+    const { ctx } = this;
+    console.log(ctx);
+    // const articleId = ctx.params.articleId;
+
+    // ctx.body = {
+    //   code: 0,
+    //   data: articleDetails,
+    //   msg: '',
+    // };
+  }
 }
 
 module.exports = ArticleController;
