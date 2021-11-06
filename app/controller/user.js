@@ -33,13 +33,15 @@ class UsersController extends Controller {
   // 注册用户
   async register() {
     const { ctx } = this;
-    const { username = 'test9', password = '111111' } = ctx.request.body;
+    const { username, password } = ctx.request.body;
+    console.log('1111111111', ctx.request);
     const createRule = {
       username: { type: 'string' },
       password: { type: 'string' },
     };
     // 校验参数;
     const user = await ctx.service.user.register(username, password);
+    console.log('user', user);
     ctx.body = {
       code: ctx.validate(createRule),
       data: user,

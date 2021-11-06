@@ -32,6 +32,7 @@ class ArticleController extends Controller {
   // 收藏文章
   async collect() {
     const { ctx } = this;
+    const articleId = ctx.params.articleId;
     const res = await ctx.service.article.article.collect(articleId);
     ctx.body = {
       code: 0,

@@ -19,7 +19,8 @@ class UserService extends Service {
   }
   // 注册
   async register(username, password) {
-    // INSERT INTO `$users`(`create_time`) VALUES(NOW())
+    // INSERT INTO `$users`(`create_time`) VALUES(NOW())\
+    console.log(22222222, username, password);
     const user = await this.app.mysql.insert('users', {
       username,
       password,
