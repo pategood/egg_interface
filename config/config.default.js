@@ -18,13 +18,13 @@ module.exports = appInfo => {
   // config.middleware = [ 'errorHandler' ];
   config.errorHandler = {
     // 通用配置（以下是重点）
-    // enable:true, // 控制中间件是否开启。
+    // enable: true, // 控制中间件是否开启。
     // match: '/user/list', // 设置只有符合某些规则的请求才会经过这个中间件（匹配路由）
     // ignore:'/shop' // 设置符合某些规则的请求不经过这个中间件。
     /**
-        注意：
-        1. match 和 ignore 不允许同时配置
-        **/
+    注意：
+    1. match 和 ignore 不允许同时配置
+    **/
     // match 和 ignore 支持多种类型的配置方式：字符串、正则、函数（推荐）
     // match(ctx) {
     //     // 只有 ios 设备才开启

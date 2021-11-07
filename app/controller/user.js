@@ -61,14 +61,12 @@ class UsersController extends Controller {
     };
   }
 
-
   // // 编辑用户
   // async update() {
   //   const { ctx } = this;
   //   const user = await ctx.service.user.update();
   //   ctx.body = user;
   // }
-
 }
 
 module.exports = UsersController;
