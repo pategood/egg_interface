@@ -9,7 +9,7 @@ module.exports = {
   sendError: function(msg,code=700) {
     this.body = {
       code: code,
-      msg: msg.sqlMessage||msg,
+      msg: msg.sqlMessage||msg || '请求失败',
     }
   }
 };
