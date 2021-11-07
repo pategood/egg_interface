@@ -15,10 +15,9 @@ module.exports = appInfo => {
   // use for cookie sign key, should change to your own and keep security
   config.keys = appInfo.name + '_1634199877026_3436';
 
-  // config.middleware = [ 'errorHandler' ];
+  config.middleware = ['errorHandler'];
   config.errorHandler = {
-    // 通用配置（以下是重点）
-    // enable: true, // 控制中间件是否开启。
+    enable: true,
     // match: '/user/list', // 设置只有符合某些规则的请求才会经过这个中间件（匹配路由）
     // ignore:'/shop' // 设置符合某些规则的请求不经过这个中间件。
     /**
@@ -88,3 +87,27 @@ module.exports = appInfo => {
     ...userConfig,
   };
 };
+
+exports = {
+  onerror: {
+    all(err, ctx) {
+      // 在此处定义针对所有响应类型的错误处理方法
+      // 注意，定义了 config.all 之后，其他错误处理方法不会再生效
+      ctx.body = 'error';
+      ctx.status = 999;
+    },
+    html(err, ctx) {
+      // html hander
+      ctx.body = '<h3>error</h3>';
+      ctx.status = 500;
+    },
+    json(err, ctx) {
+      // json hander
+      ctx.body = { message: 'error' };
+      ctx.status = 500;
+    },
+    jsonp(err, ctx) {
+      // 一般来说，不需要特殊针对 jsonp 进行错误定义，jsonp 的错误处理会自动调用 json 错误处理，并包装成 jsonp 的响应格式
+    },
+  },
+}

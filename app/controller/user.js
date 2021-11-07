@@ -22,7 +22,7 @@ class UsersController extends Controller {
       password: { type: 'string' },
     };
     // 校验参数;
-    const user = await ctx.service.user.getMyUser(username, password);
+    const user = await ctx.service.user.getMyUser({ username, password });
     ctx.body = {
       code: ctx.validate(createRule),
       data: user,
@@ -32,21 +32,19 @@ class UsersController extends Controller {
 
   // 注册用户
   async register() {
-    const { ctx } = this;
+    const { ctx,service } = this;
     const { username, password } = ctx.request.body;
-    console.log('1111111111', ctx.request);
-    const createRule = {
-      username: { type: 'string' },
-      password: { type: 'string' },
-    };
-    // 校验参数;
-    const user = await ctx.service.user.register(username, password);
-    console.log('user', user);
-    ctx.body = {
-      code: ctx.validate(createRule),
-      data: user,
-      msg: '',
-    };
+    const isExist = await service.user.getMyUser({username});
+    try{
+      if(isExist.length){
+        ctx.sendError('注册失败,存在相同用户名')
+      }else {
+        const res = await service.user.register(username, password);
+        ctx.sendSuccess(res,'注册成功')
+      }
+    } catch {
+      ctx.sendError('注册失败')
+    }
   }
 
   // 退出账户
