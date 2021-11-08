@@ -12,14 +12,27 @@ class UserService extends Service {
     const user = await this.app.mysql.query('select * from users', '')
     return user
   }
+  // 获取我的用户信息 （只有一条）
   async getMyUser(userObj) {
-    const user = await this.app.mysql.select('users', { where: userObj })
-    return user
+    const userInfo = await this.app.mysql.select('users', { where: userObj })
+    return userInfo
+  }
+  async isLogin(id) {
+    const isLogin = await this.app.mysql.select(
+      'users', {
+        where: { accountID: id },
+        columns: ['isLogin']}
+      );
+    return isLogin[0].isLogin
+  }
+
+  async login(id) {
+    const result = await this.app.mysql.query(`update users set isLogin = 1 where accountID =  ${id} ;`, '')
+    return result
   }
 
   // 注册
   async register(username, password) {
-    // INSERT INTO `$users`(`create_time`) VALUES(NOW())\
     const user = await this.app.mysql.insert('users', {
       username,
       password,
@@ -31,16 +44,14 @@ class UserService extends Service {
 
   // 注销账户
   async logout(id) {
-    const result = await this.app.mysql.query(`update users set isLogin = 1 where accountID =  ${id} ;`, '')
+    const result = await this.app.mysql.query(`update users set isLogin = 0 where accountID =  ${id} ;`, '')
     // const result = await this.app.mysql.update('users', { isLogin: 0 });
     return result
   }
 
   // 更新用户信息
   async update(data) {
-    const { id } = data
-    console.log(data,`update users set ${data} where accountID =  ${id} ;`)
-    const result = await this.app.mysql.query(`update users set isLogin = 1 where accountID =  ${id} ;`, '')
+    const result = await this.app.mysql.update('users', data,{ where: { accountID: 5} })
     // const result = await this.app.mysql.update('users', { isLogin: 0 });
     return result
   }

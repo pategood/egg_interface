@@ -1,3 +1,5 @@
+// delete  在for循环内可能无法生效
+
 // 过滤对象中为null/undefined/''/[]/{}的属性值
 export const clearDeep = (obj) => {
   if (!obj || !typeof obj === 'object') return
@@ -17,4 +19,18 @@ export const clearDeep = (obj) => {
       }
     }
   }
+}
+
+
+// 去除对象的undefined/null/NAN,不深
+// let data = { id:3, password:3, email:222, phoneNumber:12131313, nickName:null, photo:undefined, create_time:'', age:18, sex:313 }
+export function clearShallow(obj){
+  const keys = Object.keys(obj)
+  for (var key of keys) {
+    const val = obj[key]
+    if (typeof val === 'undefined'|| val === null||isNaN(val)) {
+      delete obj[key]   // 变量用[],字段用.
+    }
+  }
+  return obj
 }
