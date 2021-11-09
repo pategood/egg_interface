@@ -61,7 +61,6 @@ class UsersController extends Controller {
     try {
       if (isLogin) {
         const result = await service.user.logout(id);
-        console.log(result)
         ctx.sendSuccess(result, '注销成功')
       } else{
         ctx.sendError('用户已退出')

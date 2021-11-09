@@ -6,7 +6,6 @@ const Service = require('egg').Service;
 class ArticleService extends Service {
   // 文章列表分页查询
   async getArticleList(currentPage = 1, pageSize = 2) {
-    console.log(currentPage, pageSize);
     // const articleList = await this.app.mysql.select('article', { limit: pageSize, orders: [[ 'article_id', 'article_desc' ]] });
     // const articleList = await this.app.mysql.query('select * from article where article_id=?', [ 3 ]);
     // const articleList = await this.app.mysql.query('select * from article where article_id between 0 and 10', '');
@@ -16,7 +15,12 @@ class ArticleService extends Service {
       `select * from article where article_id > '${(currentPage - 1) * pageSize}' limit ${pageSize};`,
       ''
     );
-    return { articleList };
+    return articleList;
+  }
+
+  async getAllCount(){
+    const totalCount = await this.app.mysql.query('select article_id from article where article_id>0 order by article_id desc limit 1','')
+    return totalCount[0].article_id
   }
 
   // 获取文章详情
@@ -31,18 +35,34 @@ class ArticleService extends Service {
   /**
    * 收藏文章
    */
+  async collect(data){
+    const result = await this.app.mysql.insert('user_collect_articlelist', data);
+    return result
+  }
 
   /**
    * 取消收藏文章
    */
+  async undoCollect(data){
+    const result = await this.app.mysql.delete('user_collect_articlelist', data)
+    return result
+  }
 
   /**
    * 点赞
    */
+  async follow(data){
+    const result = await this.app.mysql.insert('user_follow_list', data);
+    return result
+  }
 
   /**
    * 取消点赞
    */
+  async undoFollow(data){
+    const result = await this.app.mysql.delete('user_follow_list', data)
+    return result
+  }
 }
 
 module.exports = ArticleService;

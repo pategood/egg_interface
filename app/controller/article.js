@@ -5,25 +5,26 @@ const Controller = require('egg').Controller;
 class ArticleController extends Controller {
   // 获取文章列表
   async getArticleList() {
-    const { ctx } = this
-    const { currentPage, pageSize } = ctx.request.body
-    const articleList = await ctx.service.article.article.getArticleList(currentPage, pageSize)
-    ctx.body = {
-      code: 0,
-      data: articleList,
-      msg: '',
+    const { ctx, service } = this;
+    const { currentPage, pageSize } = ctx.query
+    try {
+      const articleList = await service.article.article.getArticleList(currentPage, pageSize)
+      const totalCount = await service.article.article.getAllCount()
+      ctx.sendSuccess({articleList,totalCount})
+    } catch (err){
+      ctx.sendError(err)
     }
   }
 
   // 获取文章详情
   async getArticle() {
-    const { ctx } = this
+    const { ctx, service } = this;
     const articleId = ctx.params.articleId
-    const articleDetails = await ctx.service.article.article.getArticle(articleId)
-    ctx.body = {
-      code: 0,
-      data: articleDetails,
-      msg: '',
+    try {
+      const articleDetails = await service.article.article.getArticle(articleId)
+      ctx.sendSuccess(articleDetails)
+    }catch(err){
+      ctx.sendError(err)
     }
   }
 
@@ -33,30 +34,53 @@ class ArticleController extends Controller {
   // }
 
   // 点赞文章
+  // followAccountId
+  async follow() {
+    const { ctx, service } = this
+    const { followAccountId, accountID } = ctx.query
+    try {
+    const result = await service.article.article.follow({ followAccountId, accountID })
+    ctx.sendSuccess(result)
+    }catch(err){
+      ctx.sendError(err)
+    }
+  }
+
+
+  // 取消点赞
+  async undoFollow() {
+    const { ctx, service } = this
+    const { articleId, accountID } = ctx.query
+    try {
+      const result = await service.article.article.undoFollow({ followAccountId, accountID })
+      ctx.sendSuccess(result)
+    } catch (err) {
+      ctx.sendError(err)
+    }
+  }
 
   // 收藏文章
   async collect() {
-    const { ctx } = this
-    const articleId = ctx.params.articleId
-    const res = await ctx.service.article.article.collect(articleId)
-    ctx.body = {
-      code: 0,
-      data: res,
-      msg: '',
+    const { ctx, service } = this
+    const { articleId, accountID } = ctx.query
+    try {
+    const result = await service.article.article.collect({ article_id:articleId, accountID })
+    ctx.sendSuccess(result)
+    }catch(err){
+      ctx.sendError(err)
     }
   }
 
   // 取消收藏
   async undoCollect() {
-    const { ctx } = this
-    console.log(ctx)
-    // const articleId = ctx.params.articleId;
-
-    // ctx.body = {
-    //   code: 0,
-    //   data: articleDetails,
-    //   msg: '',
-    // };
+    const { ctx, service } = this
+    const { articleId, accountID } = ctx.query
+    try {
+      const result = await service.article.article.undoCollect({ article_id: articleId, accountID })
+      ctx.sendSuccess(result)
+    } catch (err) {
+      ctx.sendError(err)
+    }
   }
 }
 

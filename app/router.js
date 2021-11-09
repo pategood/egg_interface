@@ -10,17 +10,16 @@ module.exports = app => {
   router.get('/user/logout', controller.user.logout);
   router.get('/user/getMyInfo', controller.user.getMyInfo);
   router.get('/user/update', controller.user.update)
-
-
-
-  router.get('/', controller.home.index);
-  router.post('/login', controller.user.login);
-
-  // 获取文章列表
+  
+  // 文章模块
   router.get('/articles/articleList', controller.article.getArticleList);
   router.get('/articles/:articleId', controller.article.getArticle);
   router.get('/article/collections', controller.article.collect);
-  router.get('/article/collections/:articleId', controller.article.undoCollect);
+  router.get('/article/undoCollections', controller.article.undoCollect);
+  router.get('/article/follow', controller.article.follow);
+  router.get('/article/undoFollow', controller.article.undoFollow);
+  
+  router.get('/', controller.home.index);
 
   // 搜索模块
   router.get('/search/result', controller.search.getResult);
