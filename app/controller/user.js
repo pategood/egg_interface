@@ -1,5 +1,6 @@
 'use strict';
-
+// import utils from '../utils/md5.js'
+const utils = require('../utils/md5.js')
 const Controller = require('egg').Controller;
 
 class UsersController extends Controller {
@@ -14,19 +15,36 @@ class UsersController extends Controller {
       ctx.sendError(err)
     }
   }
+  async md5Login() {
+    const { ctx, service } = this
+    const { username, password } = ctx.request.body
+    let user_ticket = utils.md5(utils.md5(utils.md5(password)))
+    console.log(user_ticket)
+  }
   // 登录
   async login() {
     const { ctx, service } = this;
     const { username, password } = ctx.request.body;
-    if (!password || password.length < 6) {
-      ctx.sendError('密码长度小于6位')
-      return
-    }
-    const userInfo = await service.user.getMyUser({ username, password })
-    const { accountID } = userInfo[0]
+    const isExist = await service.user.getMyUser({ username })
     try {
-      const login = await service.user.login(accountID)
-      ctx.sendSuccess('登录成功')
+      if (isExist) {
+        const userInfo = await service.user.getMyUser({ username, password })
+        if (userInfo.length <= 0 || userInfo === 'undefined') {
+          ctx.sendError('密码错误')
+          return 
+        }
+        const { accountID } = userInfo[0]
+        const login = await service.user.login(accountID)
+        if (login.changedRows > 0) {
+          ctx.sendSuccess('登录成功') 
+        } else {
+          ctx.sendError('请勿重复登录')
+        }
+        console.log()
+      } else {
+        ctx.sendError('登录失败,请注册')
+        return
+      }
     } catch (err) {
       ctx.sendError(err)
     }
@@ -36,15 +54,15 @@ class UsersController extends Controller {
   async register() {
     const { ctx, service } = this;
     const { username, password } = ctx.request.body;
-    if (!password || password.length < 6) {
-      ctx.sendError('密码长度小于6位')
-      return
-    }
     const isExist = await service.user.getMyUser({ username });
     try {
       if (isExist.length <= 0 || isExist==='undefined') {
         const res = await service.user.register(username, password)
-        ctx.sendSuccess(res, '注册成功')
+        if (res.insertId>0) {
+          ctx.sendSuccess(res, '注册成功')
+        } else {
+          ctx.sendError('注册失败')
+        }
       } else {
         ctx.sendError('注册失败,存在相同用户名')
       }
@@ -76,10 +94,6 @@ class UsersController extends Controller {
     const { ctx, service } = this
     // 此处解析存在的变量
     const { id=11, password=777777, email="", phoneNumber, nickName, photo, create_time, age, sex } = ctx.query
-    if (!password || password.length < 6) {
-      ctx.sendError('密码长度小于6位')
-      return
-    }
     const data = { accountID:id, password, email, phoneNumber, nickName, photo, create_time, age, sex }
     const keys = Object.keys(data)
     for (var key of keys) {
