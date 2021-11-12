@@ -6,10 +6,10 @@ class ArticleController extends Controller {
   // 获取文章列表
   async getArticleList() {
     const { ctx, service } = this;
-    const { currentPage, pageSize } = ctx.query
+    const { currentPage, pageSize,id=5 } = ctx.query
     try {
-      const articleList = await service.article.article.getArticleList(currentPage, pageSize)
-      const totalCount = await service.article.article.getAllCount()
+      const articleList = await service.article.article.getArticleList(currentPage, pageSize,id)
+      const totalCount = await service.article.article.getAllCount(id)
       ctx.sendSuccess({articleList,totalCount})
     } catch (err){
       ctx.sendError(err)

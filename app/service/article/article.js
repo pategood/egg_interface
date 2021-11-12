@@ -5,22 +5,23 @@ const Service = require('egg').Service;
 
 class ArticleService extends Service {
   // 文章列表分页查询
-  async getArticleList(currentPage = 1, pageSize = 2) {
+  async getArticleList(currentPage = 1, pageSize = 3,id) {
     // const articleList = await this.app.mysql.select('article', { limit: pageSize, orders: [[ 'article_id', 'article_desc' ]] });
     // const articleList = await this.app.mysql.query('select * from article where article_id=?', [ 3 ]);
     // const articleList = await this.app.mysql.query('select * from article where article_id between 0 and 10', '');
     // const articleList = await this.app.mysql.query('select top (pageSize) * from article order by id desc', '');
     //
     const articleList = await this.app.mysql.query(
-      `select * from article where article_id > '${(currentPage - 1) * pageSize}' limit ${pageSize};`,
+      `select * from article where article_id > '${(currentPage - 1) * pageSize}' and channel_id ='${id}' limit ${pageSize};`,
       ''
     );
     return articleList;
   }
 
-  async getAllCount(){
-    const totalCount = await this.app.mysql.query('select article_id from article where article_id>0 order by article_id desc limit 1','')
-    return totalCount[0].article_id
+  async getAllCount(id) {
+    // channel_id
+    const totalCount = await this.app.mysql.query(`select count(*) from article where channel_id ='${id}'`, '')
+    return totalCount[0]['count(*)']
   }
 
   // 获取文章详情
