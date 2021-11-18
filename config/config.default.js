@@ -29,7 +29,23 @@ module.exports = appInfo => {
     username: 'root',
     password: '123456',
     database: 'egg_db_dev',
-  };
+    timezone: '+08:00', // 保存为本地时区
+    define: {
+      freezeTableName: true, //禁止转换为复数
+      underscored: true,
+      timestamps: false,
+    },
+    dialectOptions: {
+      // 让读取date类型数据时返回字符串而不是UTC时间
+      dateStrings: true,
+      typeCast(field, next) {
+        if (field.type === 'DATETIME') {
+          return field.string()
+        }
+        return next()
+      },
+    },
+  }
 
   return {
     ...config,
