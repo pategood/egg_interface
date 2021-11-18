@@ -3,8 +3,68 @@
 const Controller = require('egg').Controller;
 
 class UsersController extends Controller {
+  async login() {
+    const { ctx, service } = this
+    const { username, password } = ctx.request.body
+    const isExist = await service.user.isExist(username)
+    if (isExist) {
+      const data = await service.user.login(username, password)
+      ctx.body = { code: 200, data, msg: '密码成功!' }
+    }
+  }
 
 
+  async index() {
+    //展示列表数据-L
+    const ctx = this.ctx
+    const query = {
+      limit: ctx.helper.parseInt(ctx.query.limit),
+      offset: ctx.helper.parseInt(ctx.query.offset),
+    }
+
+    var data = await ctx.service.user.list(query)
+    var json = ctx.helper.json(data)
+    ctx.body = json
+  }
+
+  async show() {
+    //显示某记录具体的数据-R
+    const ctx = this.ctx
+    const data = await ctx.service.user.find(ctx.helper.parseInt(ctx.params.id))
+    ctx.body = {code:200,data,msg: '请求成功!'}
+  }
+
+  async create() {
+    //新增一个记录-C
+    const { ctx, service } = this
+    const {username} = ctx.request.body
+    if (!username) {
+      ctx.result({ code: 400, msg: '账号不能为空！' })
+    } else {
+      const user = await service.user.create(ctx.request.body)
+      ctx.body = { code: 201, data: user, msg: '请求成功!' }
+    }
+  }
+
+  async update() {
+    //更新指定的记录-U
+    const ctx = this.ctx
+    const id = ctx.helper.parseInt(ctx.params.id)
+    const body = ctx.request.body
+    ctx.body = await ctx.service.user.update({
+      id,
+      updates: body,
+    })
+  }
+
+  async destroy() {
+    //删除指定的记录-D
+    const ctx = this.ctx
+    const id = ctx.helper.parseInt(ctx.params.id)
+    const res = await ctx.service.user.del(id)
+    ctx.result({ code: 200, msg: '删除成功！' })
+    // ctx.body = { code: 201, data: user, msg: '请求成功!' }
+  }
 }
 
 module.exports = UsersController;
