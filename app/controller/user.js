@@ -9,10 +9,9 @@ class UsersController extends Controller {
     const isExist = await service.user.isExist(username)
     if (isExist) {
       const data = await service.user.login(username, password)
-      ctx.body = { code: 200, data, msg: '密码成功!' }
+      ctx.body = { code: 200, data, msg: '密码正确!' }
     }
   }
-
 
   async index() {
     //展示列表数据-L
