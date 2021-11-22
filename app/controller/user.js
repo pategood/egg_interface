@@ -4,12 +4,20 @@ const Controller = require('egg').Controller;
 
 class UsersController extends Controller {
   async login() {
-    const { ctx, service } = this
+    const { ctx, service, app } = this
     const { username, password } = ctx.request.body
     const isExist = await service.user.isExist(username)
     if (isExist) {
       const data = await service.user.login(username, password)
-      ctx.body = { code: 200, data, msg: '密码正确!' }
+      if (data) {
+        const token = app.jwt.sign({ username, password }, app.config.jwt.secret, {
+          expiresIn: '60m'
+        })
+        ctx.body = { code: 200, token, msg: '请求成功!' }
+      } else {
+        ctx.body = { code:400, msg: '请求失败!'}
+      }
+     
     }
   }
 

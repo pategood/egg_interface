@@ -28,7 +28,7 @@ class UserService extends Service {
         [Op.and]: [{ username }, { password }],
       },
     })
-    return user
+    return user.length
   }
 
   async list({ offset = 0, limit = 10 }) {
