@@ -12,6 +12,6 @@ module.exports = app => {
   router.resources('users', '/users', controller.user)
   
   
-  router.resources('article', '/article', controller.article)
+  router.resources('article', '/articles', controller.article)
 
 };

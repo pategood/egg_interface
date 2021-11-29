@@ -3,19 +3,16 @@
 const Controller = require('egg').Controller;
 
 class UsersController extends Controller {
-  async create(params) {
-     const { ctx, service } = this
-     const { id } = ctx.request.body
+  async create() {
+    const { ctx, service } = this
+    const { user_id, title, content } = ctx.request.body
+    const params = Object.assign(ctx.request.body, )
     try {
-      const result = await app.model.article.create({
-        title: params.title,
-        content: params.content,
-        user_id: params.user_id,
-      })
-      return result
+      console.log(ctx.request.body)
+      const data = await service.article.create(ctx.request.body)
+      ctx.body = { code: 201, data, msg: '请求成功!' }
     } catch (err) {
-      console.log(err)
-      return null
+      ctx.body = { code: 400, data:err, msg: '请求失败!' }
     }
   }
 }

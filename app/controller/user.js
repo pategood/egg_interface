@@ -17,7 +17,6 @@ class UsersController extends Controller {
       } else {
         ctx.body = { code:400, msg: '请求失败!'}
       }
-     
     }
   }
 
@@ -37,6 +36,7 @@ class UsersController extends Controller {
   async show() {
     //显示某记录具体的数据-R
     const ctx = this.ctx
+    console.log(ctx.params.id)
     const data = await ctx.service.user.find(ctx.helper.parseInt(ctx.params.id))
     ctx.body = {code:200,data,msg: '请求成功!'}
   }

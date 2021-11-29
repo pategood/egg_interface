@@ -10,7 +10,7 @@ class UserService extends Service {
   // } catch (error) {}
 
   async isExist(username) {
-    var user = await this.ctx.model.User.findOne({
+    let user = await this.ctx.model.User.findOne({
       where: {
         username,
       },
@@ -23,7 +23,7 @@ class UserService extends Service {
   }
 
   async login(username, password) {
-    var user = await this.ctx.model.User.findAll({
+    let user = await this.ctx.model.User.findAll({
       where: {
         [Op.and]: [{ username }, { password }],
       },
