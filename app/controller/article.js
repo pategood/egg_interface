@@ -6,7 +6,7 @@ class UsersController extends Controller {
   async create() {
     const { ctx, service } = this
     const { user_id, title, content } = ctx.request.body
-    const params = Object.assign(ctx.request.body, )
+    const params = Object.assign(ctx.request.body, source)
     try {
       console.log(ctx.request.body)
       const data = await service.article.create(ctx.request.body)
