@@ -3,13 +3,18 @@
 module.exports = (app) => {
   const { STRING, INTEGER, DATE, BOOLEAN } = app.Sequelize
 
-  const User = app.model.define('users', {
+  const Article = app.model.define('articles', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-    aut_name: { type: STRING(30), allowNull: false, defaultValue: '无名氏' },
-    title: { type: STRING, allowNull: false },
-    created_at: DATE,
-    updated_at: DATE,
+    user_id: { type: INTEGER, allowNull: true, defaultValue: 1 },
+    article_id: { type: INTEGER, allowNull: true, defaultValue: 1 },
+    title: { type: STRING(12), allowNull: false },
+    aut_name: { type: STRING(12), allowNull: false, defaultValue: '无' },
+    article_desc: STRING(12),
+    content: STRING(30),
+    comm_count: { type: INTEGER, allowNull: true, defaultValue: 0 },
+    create_time: { type: DATE, allowNull: true },
+    updated_time: { type: DATE, allowNull: true },
   })
 
-  return User
+  return Article
 }

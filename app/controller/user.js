@@ -58,10 +58,15 @@ class UsersController extends Controller {
     const ctx = this.ctx
     const id = ctx.helper.parseInt(ctx.params.id)
     const body = ctx.request.body
-    ctx.body = await ctx.service.user.update({
-      id,
-      updates: body,
-    })
+    try {
+      const data = await ctx.service.user.update({
+        id,
+        updates: body,
+      })
+      ctx.body = {code:200,data,msg:'更新成功！'}
+    } catch (err) {
+      ctx.body = err
+    }
   }
 
   async destroy() {

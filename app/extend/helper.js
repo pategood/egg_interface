@@ -22,4 +22,14 @@ module.exports = {
   relativeTime(time) {
     return moment(new Date(time * 1000)).fromNow()
   },
+
+  // 处理成功响应
+  success({ ctx, res = null, msg = '请求成功' }) {
+    ctx.body = {
+      code: 0,
+      data: res,
+      msg
+    }
+    ctx.status = 200
+  }
 }

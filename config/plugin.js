@@ -21,5 +21,15 @@ module.exports = {
   sequelize: {
     enable: true,
     package: 'egg-sequelize',
-  },
-};
+    timezone: '+08:00',
+    dialectOptions: {
+      dateStrings: true,
+      typeCast(field, next) {
+        if (field.type === "DATETIME") {
+          return field.string();
+        }
+        return next();
+      }
+    }
+  }
+}
