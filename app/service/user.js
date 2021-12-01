@@ -1,34 +1,34 @@
 
 'use strict';
 
-const { Op } = require('sequelize')
+const { Op } = require('sequelize');
 const Service = require('egg').Service;
 class UserService extends Service {
   // const transaction = await this.ctx.model.transaction();
   // try {
-    
+
   // } catch (error) {}
 
   async isExist(username) {
-    let user = await this.ctx.model.User.findOne({
+    const user = await this.ctx.model.User.findOne({
       where: {
         username,
       },
-    })
+    });
     if (user) {
-      return true
-    } else {
-      return false
+      return true;
     }
+    return false;
+
   }
 
   async login(username, password) {
-    let user = await this.ctx.model.User.findAll({
+    const user = await this.ctx.model.User.findAll({
       where: {
         [Op.and]: [{ username }, { password }],
       },
-    })
-    return user.length
+    });
+    return user.length;
   }
 
   async list({ offset = 0, limit = 10 }) {
@@ -36,38 +36,38 @@ class UserService extends Service {
       offset,
       limit,
       order: [
-        ['created_at', 'desc'],
-        ['id', 'desc'],
+        [ 'created_at', 'desc' ],
+        [ 'id', 'desc' ],
       ],
-    })
+    });
   }
 
   async find(id) {
-    const user = await this.ctx.model.User.findByPk(id)
+    const user = await this.ctx.model.User.findByPk(id);
     if (!user) {
-      this.ctx.throw(404, 'user not found')
+      this.ctx.throw(404, 'user not found');
     }
-    return user
+    return user;
   }
 
   async create(user) {
-    return this.ctx.model.User.create(user)
+    return this.ctx.model.User.create(user);
   }
 
   async update({ id, updates }) {
-    const user = await this.ctx.model.User.findByPk(id)
+    const user = await this.ctx.model.User.findByPk(id);
     if (!user) {
-      this.ctx.throw(404, 'user not found')
+      this.ctx.throw(404, 'user not found');
     }
-    return user.update(updates)
+    return user.update(updates);
   }
 
   async del(id) {
-    const user = await this.ctx.model.User.findByPk(id)
+    const user = await this.ctx.model.User.findByPk(id);
     if (!user) {
-      this.ctx.throw(404, 'user not found')
+      this.ctx.throw(404, 'user not found');
     } else {
-      return user.destroy()
+      return user.destroy();
     }
   }
 }

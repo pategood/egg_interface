@@ -1,41 +1,41 @@
-'use strict'
+'use strict';
 
-const { Op } = require('sequelize')
-const Service = require('egg').Service
+const { Op } = require('sequelize');
+const Service = require('egg').Service;
 class ArticelService extends Service {
 
   async create(article) {
-    return this.ctx.model.Article.create(article)
+    return this.ctx.model.Article.create(article);
   }
 
   async findOne(id) {
-    try {
-      const article = await this.ctx.model.Article.findOne({
-        where: {user_id:id}
-      })
-      if (!article) this.ctx.throw(404, 'article not found')
-      return article
-    } catch (error) {
-      return null
+    const article = await this.ctx.model.Article.findOne({
+      where: { user_id: id },
+    });
+    if (!article) {
+      this.ctx.throw(404, 'article not found');
+    } else {
+      return article;
     }
+    return null;
   }
-  
+
   async update({ id, updates }) {
     const article = await this.ctx.model.Article.findOne({
       where: { article_id: id },
-    })
-    if (!article) this.ctx.throw(404, 'article not found') 
-    return article.update(updates)
+    });
+    if (!article) this.ctx.throw(404, 'article not found');
+    return article.update(updates);
   }
-  
+
   async del(id) {
     const article = await this.ctx.model.Article.findOne({
       where: { article_id: id },
-    })
+    });
     if (!article) {
-      this.ctx.throw(404, 'article not found')
+      this.ctx.throw(404, 'article not found');
     } else {
-      return article.destroy()
+      return article.destroy();
     }
   }
 
@@ -54,4 +54,4 @@ class ArticelService extends Service {
 
 }
 
-module.exports = ArticelService
+module.exports = ArticelService;
