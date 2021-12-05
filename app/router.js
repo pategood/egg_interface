@@ -8,10 +8,10 @@ module.exports = app => {
 
   // router.get('/', controller.home.index)
   // router.get('/news', controller.news.list)
-  router.post('/login', controller.user.login) //登录并生成Token
-  router.resources('users', '/users', controller.user)
-  
-  
-  router.resources('article', '/articles', controller.article)
+  router.post('/login', controller.user.login); // 登录并生成Token
+  router.resources('users', '/users', controller.user);
+
+
+  router.resources('article', '/articles', controller.article);
 
 };
