@@ -1,7 +1,7 @@
-'use strict'
+'use strict';
 
-module.exports = (app) => {
-  const { STRING, INTEGER, DATE, BOOLEAN } = app.Sequelize
+module.exports = app => {
+  const { STRING, INTEGER, DATE, BOOLEAN } = app.Sequelize;
 
   const Article = app.model.define('articles', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
@@ -14,7 +14,7 @@ module.exports = (app) => {
     comm_count: { type: INTEGER, allowNull: true, defaultValue: 0 },
     create_time: { type: DATE, allowNull: true },
     updated_time: { type: DATE, allowNull: true },
-  })
+  });
 
-  return Article
-}
+  return Article;
+};

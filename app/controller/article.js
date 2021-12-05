@@ -57,6 +57,17 @@ class ArticelsController extends Controller {
     }
     // ctx.body = { code: 201, data: user, msg: '请求成功!' }
   }
+
+  async index() {
+    const { ctx, service } = this;
+    const query = {
+      limit: ctx.helper.parseInt(ctx.query.limit),
+      offset: ctx.helper.parseInt(ctx.query.offset),
+    };
+    const data = await service.article.list(query);
+    const json = ctx.helper.json(data);
+    ctx.body = json;
+  }
 }
 
 module.exports = ArticelsController;

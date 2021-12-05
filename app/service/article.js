@@ -17,7 +17,6 @@ class ArticelService extends Service {
     } else {
       return article;
     }
-    return null;
   }
 
   async update({ id, updates }) {
@@ -40,16 +39,16 @@ class ArticelService extends Service {
   }
 
 
-  // async list({ offset = 0, limit = 10 }) {
-  //   return this.ctx.model.User.findAndCountAll({
-  //     offset,
-  //     limit,
-  //     order: [
-  //       ['created_at', 'desc'],
-  //       ['id', 'desc'],
-  //     ],
-  //   })
-  // }
+  async list({ offset = 0, limit = 10 }) {
+    return this.ctx.model.Article.findAndCountAll({
+      offset,
+      limit,
+      order: [
+        [ 'create_time', 'desc' ],
+        [ 'id', 'desc' ],
+      ],
+    });
+  }
 
 
 }
