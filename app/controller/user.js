@@ -13,10 +13,12 @@ class UsersController extends Controller {
         const token = app.jwt.sign({ username, password }, app.config.jwt.secret, {
           expiresIn: '60m',
         });
-        ctx.body = { code: 200, token, msg: '请求成功!' };
+        ctx.body = { code: 200, data: { token }, msg: '请求成功!' };
       } else {
         ctx.body = { code: 400, msg: '请求失败!' };
       }
+    } else {
+      ctx.body = { code: 200, data: null, msg: '账号不存在，请注册!' };
     }
   }
 

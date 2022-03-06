@@ -33,7 +33,7 @@ module.exports = appInfo => {
     username: 'root',
     password: '123456',
     define: {
-      //freezeTableName默认值为false，会自动在表名后加s
+      // freezeTableName默认值为false，会自动在表名后加s
       freezeTableName: true,
       // timestamps默认值为true，会自动添加create_time和update_time
       timestamps: false,
@@ -48,7 +48,8 @@ module.exports = appInfo => {
       ignoreJSON: true,
     },
     // 允许访问接口的白名单
-    domainWhiteList: [ '*' ], // ['http://localhost:8080']
+    domainWhiteList: [ '*' ], // ['http://localhost:7891']
+    // domainWhiteList: [ 'http://localhost:7891' ], // ['http://localhost:7891']
   };
   config.cors = {
     origin: '*',

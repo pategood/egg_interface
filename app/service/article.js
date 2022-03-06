@@ -10,7 +10,7 @@ class ArticelService extends Service {
 
   async findOne(id) {
     const article = await this.ctx.model.Article.findOne({
-      where: { user_id: id },
+      where: { article_id: id },
     });
     if (!article) {
       this.ctx.throw(404, 'article not found');
