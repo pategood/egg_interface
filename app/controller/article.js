@@ -68,6 +68,18 @@ class ArticelsController extends Controller {
     const json = ctx.helper.json(data);
     ctx.body = json;
   }
+  async search() {
+    const { ctx, service } = this;
+    const query = {
+      limit: ctx.helper.parseInt(ctx.query.limit),
+      offset: ctx.helper.parseInt(ctx.query.offset),
+    };
+    const data = await service.article.list(query);
+    const json = ctx.helper.json(data);
+    ctx.body = json;
+  }
+
+
 }
 
 module.exports = ArticelsController;

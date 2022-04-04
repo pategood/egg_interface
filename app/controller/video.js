@@ -19,11 +19,13 @@ class VideoController extends Controller {
 
   async index() {
     const { ctx, service } = this;
-    const query = {
-      limit: ctx.helper.parseInt(ctx.query.limit),
-      offset: ctx.helper.parseInt(ctx.query.offset),
+    const { body } = ctx.request;
+    const params = {
+      pageInfo: body.pageInfo,
+      reqQuery: body.queryData,
     };
-    const data = await service.video.list(query);
+    const data = await service.video.list(params);
+    data.count = data.rows.length;
     const json = ctx.helper.json(data);
     ctx.body = json;
   }

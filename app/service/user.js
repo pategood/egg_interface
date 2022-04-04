@@ -22,6 +22,7 @@ class UserService extends Service {
 
   }
 
+
   async login(username, password) {
     const user = await this.ctx.model.User.findAll({
       where: {

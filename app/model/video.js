@@ -3,7 +3,7 @@
 module.exports = app => {
   const { STRING, INTEGER, DATE, BOOLEAN } = app.Sequelize;
 
-  const Video = app.model.define('video', {
+  const Video = app.model.define('videos', {
     id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     title: { type: STRING, allowNull: false },
     video_id: { type: INTEGER, allowNull: false, defaultValue: 1 },
