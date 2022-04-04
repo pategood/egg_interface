@@ -22,6 +22,19 @@ class UsersController extends Controller {
     }
   }
 
+  async register() {
+    const { ctx, service } = this;
+    const { username } = ctx.request.body;
+    const isExist = await service.user.isExist(username);
+    if (isExist) {
+      ctx.body = { code: 200, data: null, msg: '账号已存在' };
+    } else {
+      const user = await service.user.create(ctx.request.body);
+      ctx.body = { code: 201, data: user, msg: '注册成功!' };
+    }
+  }
+
+
   async index() {
     // 展示列表数据-L
     const ctx = this.ctx;

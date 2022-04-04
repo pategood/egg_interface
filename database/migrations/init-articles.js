@@ -7,6 +7,7 @@ module.exports = {
       id: { type: INTEGER, primaryKey: true, autoIncrement: true },
       user_id: { type: INTEGER, allowNull: true, defaultValue: 1 },
       article_id: { type: INTEGER, allowNull: true, defaultValue: 1 },
+      channel_id: { type: INTEGER, allowNull: false, defaultValue: 1 },
       title: { type: STRING(12), allowNull: false },
       aut_name: { type: STRING(12), allowNull: false, defaultValue: '无' },
       article_desc: STRING(12),

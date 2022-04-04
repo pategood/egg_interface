@@ -14,6 +14,18 @@ class VideoService extends Service {
       return video;
     }
   }
+
+
+  async list({ offset = 0, limit = 20 }) {
+    return this.ctx.model.Video.findAndCountAll({
+      offset,
+      limit,
+      order: [
+        [ 'create_time', 'desc' ],
+        [ 'id', 'desc' ],
+      ],
+    });
+  }
 }
 
 module.exports = VideoService;

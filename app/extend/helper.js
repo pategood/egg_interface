@@ -20,7 +20,7 @@ module.exports = {
     return moment(time * 1000).format('YYYY-MM-DD HH:mm:ss');
   },
   relativeTime(time) {
-    return moment(new Date(time * 1000)).fromNow()
+    return moment(new Date(time * 1000)).fromNow();
   },
 
   // 处理成功响应
@@ -28,8 +28,8 @@ module.exports = {
     ctx.body = {
       code: 0,
       data: res,
-      msg
-    }
-    ctx.status = 200
-  }
-}
+      msg,
+    };
+    ctx.status = 200;
+  },
+};

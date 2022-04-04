@@ -25,11 +25,11 @@ module.exports = {
     dialectOptions: {
       dateStrings: true,
       typeCast(field, next) {
-        if (field.type === "DATETIME") {
+        if (field.type === 'DATETIME') {
           return field.string();
         }
         return next();
-      }
-    }
-  }
-}
+      },
+    },
+  },
+};

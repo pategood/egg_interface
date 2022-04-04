@@ -3,12 +3,6 @@
 const Controller = require('egg').Controller;
 
 class VideoController extends Controller {
-  async create() {
-    // const { ctx, service } = this;
-
-  }
-
-
   async show() {
     // 显示某记录具体的数据-R
     const { ctx, service } = this;
@@ -21,6 +15,17 @@ class VideoController extends Controller {
     } catch (error) {
       ctx.body = { code: 404, msg: error.message || '请求失败!' };
     }
+  }
+
+  async index() {
+    const { ctx, service } = this;
+    const query = {
+      limit: ctx.helper.parseInt(ctx.query.limit),
+      offset: ctx.helper.parseInt(ctx.query.offset),
+    };
+    const data = await service.video.list(query);
+    const json = ctx.helper.json(data);
+    ctx.body = json;
   }
 
 }
