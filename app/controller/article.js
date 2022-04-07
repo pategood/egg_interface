@@ -84,11 +84,9 @@ class ArticelsController extends Controller {
     const { ctx, service } = this;
     const body = ctx.request.body;
     try {
-      const isExist = await service.article.findOne(ctx.helper.parseInt(body.id));
-      !isExist && ctx.throw('参数有误');
       // 执行收藏文章
-      await service.article.collect(ctx.helper.parseInt(body.id));
-      ctx.body = { code: 200, msg: '请求成功' };
+      const data = await service.article.collect(body);
+      ctx.body = { code: 200, data, msg: '请求成功' };
     } catch (error) {
       ctx.body = { code: 404, msg: error.message || '请求失败!' };
     }

@@ -22,6 +22,8 @@ module.exports = app => {
       defaultValue: 0,
       comment: '登录状态: 1 登录 0 退出',
     },
+    followNum: { type: INTEGER, defaultValue: 0 },
+    collectNum: { type: INTEGER, defaultValue: 0 },
     created_at: DATE,
     updated_at: DATE,
   });

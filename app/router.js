@@ -13,7 +13,7 @@ module.exports = app => {
 
   router.resources('article', '/articles', controller.article);
 
-  router.post('article/collect', controller.collectArticle);
+  router.post('/article/collect', controller.article.collectArticle);
   // 评论文章
   // router.post('article/collect', controller.discuss);
 
