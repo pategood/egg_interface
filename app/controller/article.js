@@ -68,6 +68,7 @@ class ArticelsController extends Controller {
     const json = ctx.helper.json(data);
     ctx.body = json;
   }
+
   async search() {
     const { ctx, service } = this;
     const query = {
@@ -77,6 +78,20 @@ class ArticelsController extends Controller {
     const data = await service.article.list(query);
     const json = ctx.helper.json(data);
     ctx.body = json;
+  }
+
+  async collectArticle() {
+    const { ctx, service } = this;
+    const body = ctx.request.body;
+    try {
+      const isExist = await service.article.findOne(ctx.helper.parseInt(body.id));
+      !isExist && ctx.throw('参数有误');
+      // 执行收藏文章
+      await service.article.collect(ctx.helper.parseInt(body.id));
+      ctx.body = { code: 200, msg: '请求成功' };
+    } catch (error) {
+      ctx.body = { code: 404, msg: error.message || '请求失败!' };
+    }
   }
 
 

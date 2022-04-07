@@ -51,6 +51,14 @@ class ArticelService extends Service {
   }
 
 
+  async collect(id) {
+    const json = await this.ctx.model.Article.findOne({
+      where: { article_id: id },
+    });
+    // 跟新
+    return json.update();
+  }
+
 }
 
 module.exports = ArticelService;

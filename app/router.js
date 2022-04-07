@@ -13,6 +13,11 @@ module.exports = app => {
 
   router.resources('article', '/articles', controller.article);
 
+  router.post('article/collect', controller.collectArticle);
+  // 评论文章
+  // router.post('article/collect', controller.discuss);
+
+
   router.post('/video/queryList', controller.video.index);
   router.post('/video/detail/:id', controller.video.show);
 
