@@ -24,6 +24,9 @@ module.exports = app => {
     },
     created_at: DATE,
     updated_at: DATE,
+  }, {
+    timestamps: true, // 是否自动写入时间戳
+    tableName: 'users', // 自定义数据表名称
   });
 
   return User;

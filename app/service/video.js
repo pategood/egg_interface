@@ -25,6 +25,7 @@ class VideoService extends Service {
       limit: Number(limit),
       order: [
         [ 'create_time', 'desc' ],
+        [ 'id', 'asc' ],
       ],
     });
   }

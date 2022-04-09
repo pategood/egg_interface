@@ -5,8 +5,13 @@ const Controller = require('egg').Controller;
 class ArticelsController extends Controller {
   async create() {
     const { ctx, service } = this;
+    const { body } = ctx.request;
     try {
-      const data = await service.article.create(ctx.request.body);
+      const isExist = await service.article.findArticle(body);
+      if (isExist) {
+        throw '文章已存在';
+      }
+      const data = await service.article.create(body);
       ctx.body = { code: 201, data, msg: '请求成功!' };
     } catch (err) {
       ctx.body = { code: 400, data: err, msg: '请求失败!' };
@@ -65,16 +70,20 @@ class ArticelsController extends Controller {
       offset: ctx.helper.parseInt(ctx.query.offset),
     };
     const data = await service.article.list(query);
+    data.count = data.rows.length;
     const json = ctx.helper.json(data);
     ctx.body = json;
   }
+
   async search() {
     const { ctx, service } = this;
-    const query = {
-      limit: ctx.helper.parseInt(ctx.query.limit),
-      offset: ctx.helper.parseInt(ctx.query.offset),
+    const { body } = ctx.request;
+    const params = {
+      pageInfo: body.pageInfo,
+      reqQuery: body.queryData,
     };
-    const data = await service.article.list(query);
+    const data = await service.article.list(params);
+    data.count = data.rows.length;
     const json = ctx.helper.json(data);
     ctx.body = json;
   }

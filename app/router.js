@@ -13,9 +13,10 @@ module.exports = app => {
 
   router.resources('article', '/articles', controller.article);
 
+  router.post('/article/queryList', controller.article.search);
+
   router.post('/video/queryList', controller.video.index);
   router.post('/video/detail/:id', controller.video.show);
 
-  router.post('/video/search', controller.article.search);
 
 };

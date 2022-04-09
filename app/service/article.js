@@ -12,11 +12,7 @@ class ArticelService extends Service {
     const article = await this.ctx.model.Article.findOne({
       where: { article_id: id },
     });
-    if (!article) {
-      this.ctx.throw(404, 'article not found');
-    } else {
-      return article;
-    }
+    return article ? article : this.ctx.throw(404, 'article not found');
   }
 
   async update({ id, updates }) {
@@ -48,6 +44,26 @@ class ArticelService extends Service {
         [ 'id', 'desc' ],
       ],
     });
+  }
+
+  async searchList() {
+    const { pageInfo, reqQuery } = params;
+    const offset = pageInfo.pageSize * pageInfo.pageIndex || 0;
+    const limit = Number(pageInfo.pageSize || 20);
+    return this.ctx.model.Article.findAndCountAll({
+      offset: Number(offset),
+      limit: Number(limit),
+      order: [
+        [ 'create_time', 'desc' ],
+      ],
+    });
+  }
+
+  async findArticle(params) {
+    const res = await this.ctx.model.Article.findOne({
+      where: { title: params.title },
+    });
+    return res;
   }
 
 
