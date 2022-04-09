@@ -88,6 +88,18 @@ class ArticelsController extends Controller {
     ctx.body = json;
   }
 
+  async collectArticle() {
+    const { ctx, service } = this;
+    const body = ctx.request.body;
+    try {
+      // 执行收藏文章
+      const data = await service.article.collect(body);
+      ctx.body = { code: 200, data, msg: '请求成功' };
+    } catch (error) {
+      ctx.body = { code: 404, msg: error.message || '请求失败!' };
+    }
+  }
+
 
 }
 

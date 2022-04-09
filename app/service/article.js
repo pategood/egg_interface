@@ -19,7 +19,7 @@ class ArticelService extends Service {
     const article = await this.ctx.model.Article.findOne({
       where: { article_id: id },
     });
-    if (!article) this.ctx.throw(404, 'article not found');
+    if (!article) this.ctx.throw(400, 'article not found');
     return article.update(updates);
   }
 
@@ -28,7 +28,7 @@ class ArticelService extends Service {
       where: { article_id: id },
     });
     if (!article) {
-      this.ctx.throw(404, 'article not found');
+      this.ctx.throw(400, 'article not found');
     } else {
       return article.destroy();
     }
@@ -66,6 +66,14 @@ class ArticelService extends Service {
     return res;
   }
 
+
+  async collect(body) {
+    const json = await this.ctx.model.Article.findOne({
+      where: { article_id: body.article_id },
+    });
+    console.log(json);
+    return json.update();
+  }
 
 }
 

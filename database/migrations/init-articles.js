@@ -12,6 +12,7 @@ module.exports = {
       aut_name: { type: STRING(12), allowNull: false, defaultValue: '无' },
       article_desc: STRING(12),
       content: STRING(30),
+      collect_count: { type: INTEGER, allowNull: false, defaultValue: 0 },
       comm_count: { type: INTEGER, allowNull: true, defaultValue: 0 },
       create_time: { type: DATE, allowNull: true },
       updated_time: { type: DATE, allowNull: true },
