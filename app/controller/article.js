@@ -23,10 +23,9 @@ class ArticelsController extends Controller {
     const { ctx, service } = this;
     try {
       const data = await service.article.findOne(ctx.helper.parseInt(ctx.params.id));
-      if (data) {
-        ctx.body = { code: 200, data, msg: '请求成功!' };
-      }
-      ctx.body = { code: 404, data, msg: '请求失败!' };
+      data ?
+        ctx.body = { code: 200, data, msg: '请求成功!' }
+        : ctx.body = { code: 404, data, msg: '请求失败!' };
     } catch (error) {
       ctx.body = { code: 404, msg: error.message || '请求失败!' };
     }
@@ -36,7 +35,7 @@ class ArticelsController extends Controller {
     // 更新指定的记录-U
     const ctx = this.ctx;
     const id = ctx.helper.parseInt(ctx.params.id);
-    const body = ctx.request.body;
+    const body = JSON.stringify(ctx.request.body);
     try {
       const data = await ctx.service.article.update({
         id,
@@ -76,16 +75,22 @@ class ArticelsController extends Controller {
   }
 
   async search() {
+    console.log(11111);
     const { ctx, service } = this;
     const { body } = ctx.request;
-    const params = {
-      pageInfo: body.pageInfo,
-      reqQuery: body.queryData,
-    };
-    const data = await service.article.list(params);
-    data.count = data.rows.length;
-    const json = ctx.helper.json(data);
-    ctx.body = json;
+    console.log(body, 'body');
+    try {
+      const params = {
+        pageInfo: body.pageInfo,
+        reqQuery: body.queryData,
+      };
+      const data = await service.article.list(params);
+      data.count = data.rows.length;
+      const json = ctx.helper.json(data);
+      ctx.body = json;
+    } catch (error) {
+      ctx.body = { error };
+    }
   }
 
   async collectArticle() {

@@ -4,10 +4,6 @@
 const { Op } = require('sequelize');
 const Service = require('egg').Service;
 class UserService extends Service {
-  // const transaction = await this.ctx.model.transaction();
-  // try {
-
-  // } catch (error) {}
 
   async isExist(username) {
     const user = await this.ctx.model.User.findOne({
@@ -29,7 +25,7 @@ class UserService extends Service {
         [Op.and]: [{ username }, { password }],
       },
     });
-    return user.length;
+    return user;
   }
 
   async list({ offset = 0, limit = 10 }) {
@@ -38,7 +34,7 @@ class UserService extends Service {
       limit,
       order: [
         [ 'created_at', 'desc' ],
-        [ 'id', 'desc' ],
+        [ 'user_id', 'desc' ],
       ],
     });
   }

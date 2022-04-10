@@ -5,12 +5,12 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     const { INTEGER, DATE, STRING, BOOLEAN } = Sequelize;
     await queryInterface.createTable('users', {
-      id: { type: INTEGER, primaryKey: true, autoIncrement: true },
-      nick_name: { type: STRING(30), allowNull: false, defaultValue: '无' },
+      user_id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+      nick_name: { type: STRING(30), allowNull: false, defaultValue: '无名氏' },
       username: { type: STRING(10), allowNull: false, unique: true },
       password: { type: STRING(16), allowNull: false },
-      email: STRING(12),
-      phoneNumber: INTEGER,
+      email: STRING(30),
+      phoneNumber: STRING(20),
       age: INTEGER,
       avatar: {
         type: STRING(150),

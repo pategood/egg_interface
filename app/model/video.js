@@ -4,9 +4,8 @@ module.exports = app => {
   const { STRING, INTEGER, DATE, BOOLEAN } = app.Sequelize;
 
   const Video = app.model.define('videos', {
-    id: { type: INTEGER, primaryKey: true, autoIncrement: true },
+    video_id: { type: INTEGER, primaryKey: true, autoIncrement: true },
     title: { type: STRING, allowNull: false },
-    video_id: { type: INTEGER, allowNull: false, defaultValue: 1 },
     video_desc: STRING(20),
     direction: { type: STRING, allowNull: false },
     url: { type: STRING, allowNull: false, defaultValue: 'http://clips.vorwaerts-gmbh.de/big_buck_bunny.mp4' },

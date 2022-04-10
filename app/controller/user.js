@@ -8,12 +8,15 @@ class UsersController extends Controller {
     const { username, password } = ctx.request.body;
     const isExist = await service.user.isExist(username);
     if (isExist) {
-      const data = await service.user.login(username, password);
-      if (data) {
+      const user = await service.user.login(username, password);
+      if (user.length > 0) {
         const token = app.jwt.sign({ username, password }, app.config.jwt.secret, {
           expiresIn: '60m',
         });
-        ctx.body = { code: 200, data: { token }, msg: '请求成功!' };
+        ctx.body = {
+          code: 200,
+          data: { token, user_id: user[0].user_id },
+          msg: '请求成功!' };
       } else {
         ctx.body = { code: 400, msg: '请求失败!' };
       }
@@ -34,7 +37,6 @@ class UsersController extends Controller {
     }
   }
 
-
   async index() {
     // 展示列表数据-L
     const ctx = this.ctx;
@@ -51,7 +53,6 @@ class UsersController extends Controller {
   async show() {
     // 显示某记录具体的数据-R
     const ctx = this.ctx;
-    console.log(ctx.params.id);
     const data = await ctx.service.user.find(ctx.helper.parseInt(ctx.params.id));
     ctx.body = { code: 200, data, msg: '请求成功!' };
   }
@@ -74,13 +75,15 @@ class UsersController extends Controller {
     const id = ctx.helper.parseInt(ctx.params.id);
     const body = ctx.request.body;
     try {
-      const data = await ctx.service.user.update({
+      const isExist = await ctx.service.user.find(id);
+      if (!isExist) { ctx.throw(400, '用户不存在'); }
+      await ctx.service.user.update({
         id,
         updates: body,
       });
-      ctx.body = { code: 200, data, msg: '更新成功！' };
+      ctx.body = { code: 200, msg: '更新成功！' };
     } catch (err) {
-      ctx.body = err;
+      ctx.body = { code: 400, msg: err.message };
     }
   }
 
@@ -90,7 +93,6 @@ class UsersController extends Controller {
     const id = ctx.helper.parseInt(ctx.params.id);
     const res = await ctx.service.user.del(id);
     if (res) ctx.result({ code: 200, msg: '删除成功！' });
-
     // ctx.body = { code: 201, data: user, msg: '请求成功!' }
   }
 }

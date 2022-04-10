@@ -12,6 +12,7 @@ class ArticelService extends Service {
     const article = await this.ctx.model.Article.findOne({
       where: { article_id: id },
     });
+    console.log(article, 'article');
     return article ? article : this.ctx.throw(404, 'article not found');
   }
 
